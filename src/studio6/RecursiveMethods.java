@@ -1,5 +1,7 @@
 package studio6;
 
+import java.awt.Color;
+
 import edu.princeton.cs.introcs.StdDraw;
 
 public class RecursiveMethods {
@@ -12,10 +14,12 @@ public class RecursiveMethods {
 	 *         ...)
 	 */
 	public static double geometricSum(int n) {
-		
-			// FIXME compute the geometric sum for the first n terms recursively
-			return 0;
-		
+		if (n==0) {
+			return 0.0;
+		}
+		else {
+			return geometricSum(n-1)+ Math.pow(0.5, n);
+		}
 	}
 
 	/**
@@ -26,6 +30,15 @@ public class RecursiveMethods {
 	 * @param q second operand
 	 * @return greatest common divisor of p and q
 	 */
+	/*	public static int gcd(int p, int q) {
+		while (q != 0) {
+			int temp = q;
+			q = p % q;
+			p = temp;
+		}
+		return p;
+	}*/
+	
 	public static int gcd(int p, int q) {
 		
 			// FIXME compute the gcd of p and q using recursion
@@ -59,8 +72,34 @@ public class RecursiveMethods {
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius,
 			double radiusMinimumDrawingThreshold) {
-		
+			// base case, stop when the size is sufficiently small
+			if (radius < radiusMinimumDrawingThreshold) {
+				return;  // abandon recursion
+			}
+			
+			StdDraw.circle(xCenter, yCenter, radius);
+			
+			StdDraw.pause(1);
+			
+			circlesUponCircles(xCenter,yCenter+radius,radius/2.5,radiusMinimumDrawingThreshold);//ll
+			circlesUponCircles(xCenter,yCenter-radius,radius/2.5,radiusMinimumDrawingThreshold);//ul
+			circlesUponCircles(xCenter+radius,yCenter,radius/2.5,radiusMinimumDrawingThreshold);//lr
+			circlesUponCircles(xCenter-radius,yCenter,radius/2.5,radiusMinimumDrawingThreshold);//ur
+			
+		}
+
+		public static void main(String[] args) {
+			double bound=2.0;
+			StdDraw.setXscale(-bound,bound);
+			StdDraw.setYscale(-bound,bound);
+			StdDraw.setPenColor(Color.pink);
+			
+			circlesUponCircles(0.0, 0.0,1.1,1.0/100.0 );
+			
+
+		}
+
 		// FIXME
 	}
 
-}
+
